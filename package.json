@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "up": "mkdir -p data && docker-compose up -d",
+    "down": "docker-compose down -d",
+    "stop": "docker-compose stop -d",
+    "dev": "npm run dev --prefix api"
   },
   "keywords": [],
   "author": "",
