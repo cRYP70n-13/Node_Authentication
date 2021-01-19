@@ -1,15 +1,16 @@
 import { Router } from 'express';
 import { logIn } from '../auth';
+import { BadRequest } from '../errors';
 import { guest, catchAsync } from '../middlewares';
 import { User } from '../models';
-import { registerSchema } from '../validations';
+import { registerSchema, validate } from '../validations';
 
 const router = Router();
 
 router.post('/register', guest, catchAsync (async (req, res) => {
 
   // Validate the incomming user
-  await registerSchema.validateAsync(req.body, { abortEarly: false });
+  await validate(registerSchema, req.body);
 
   // Fetching the user data from the body
   const { email, name, password } = req.body;
@@ -19,7 +20,7 @@ router.post('/register', guest, catchAsync (async (req, res) => {
 
   // Throw error if yes
   if (found) {
-    throw new Error('Invalid Email');
+    throw new BadRequest('Invalid Email');
   }
 
   // Else create a new one

@@ -1,6 +1,7 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import session, { Store } from 'express-session';
 import { SESSION_OPTIONS } from './config';
+import { notFound, serverError } from './middlewares';
 import { register } from './routes';
 
 export const createApp = (store: Store) => {
@@ -23,16 +24,10 @@ export const createApp = (store: Store) => {
   app.use(register);
 
   // Error handling middlewares
-  app.use(function (req, res, next) {
-    res.json({
-      message: 'Not found'
-    })
-  });
+  app.use(notFound);
 
-  app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    console.error(err.stack);
-    res.status(500).json({message: 'Server Error'});
-  });
+  // Handling the server Errors
+  app.use(serverError)
 
   return app;
 }
