@@ -1,3 +1,4 @@
 # Authentication in NodeJS
 
-- [ ] Connecting to MongoDB & Redis
+- [x] Connecting to MongoDB & Redis
+- [x] the register route and middlewares
