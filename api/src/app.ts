@@ -2,7 +2,7 @@ import express from 'express';
 import session, { Store } from 'express-session';
 import { SESSION_OPTIONS } from './config';
 import { notFound, serverError } from './middlewares';
-import { register } from './routes';
+import { home, login, register } from './routes';
 
 export const createApp = (store: Store) => {
 
@@ -22,6 +22,8 @@ export const createApp = (store: Store) => {
 
   // The routes
   app.use(register);
+  app.use(login);
+  app.use(home);
 
   // Error handling middlewares
   app.use(notFound);
